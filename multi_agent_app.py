@@ -50,6 +50,7 @@ def ask_gemini(prompt: str) -> str:
 
 @observe()
 def jina_search(query: str) -> str:
+    query = query.replace('"', "").replace("'", "")
     url = f"https://s.jina.ai/{quote(query)}"
 
     headers = {
@@ -61,7 +62,6 @@ def jina_search(query: str) -> str:
     response.raise_for_status()
 
     return response.text[:12000]
-
 
 # -----------------------------
 # Agent 1: Planner Agent
@@ -86,6 +86,7 @@ Rules:
 - Return only the queries.
 - One query per line.
 - Do not number them.
+- Do not use quotation marks around phrases.
 - Focus on academic papers, arXiv papers, research agents, multi-agent systems, query planning, iterative search, and deep research agents.
 - Avoid repeating previous queries.
 """
